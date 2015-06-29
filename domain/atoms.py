@@ -30,7 +30,7 @@ class User(object):
         ##add here other caracteristics (country, premium status)
 
     def __repr__(self):
-        return "User()"
+        return "User("+str(self.id)+")"
 
     def add_points(self, additional_points):
         """Add points to his counter
@@ -70,7 +70,7 @@ class Movie(object):
 
             
     def __repr__(self):
-        return "Movie()"
+        return "Movie("+str(self.id)+")"
     
     def __str__(self):
         return self.title+" by "+self.producer+" in "+self.year
@@ -100,7 +100,7 @@ class Dimensionless(object):
 class Rating(object):
     """Rating of a movie by a given user"""
 
-    def __init__(self, value=0, units=Star()):
+    def __init__(self, value=None, units=Star()):
         self.value = value
         self.units = units
 
@@ -111,7 +111,7 @@ class Rating(object):
             self.units.maxvalue - self.units.minvalue) #rescale rating to [0,1]
                 
             
-    def __str__(self):
+    def __repr__(self):
         return str(round(self.value,1))+"/"+str(self.units.maxvalue)+" "+self.units.unit_name
 
 

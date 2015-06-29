@@ -6,6 +6,12 @@ def _cluster_by_kmeans():
     """Use K-means to clusterize Movies. Most likely will give spurious results since we need to know the number of groups beforehand.
     """
 
+
+
+
+
+    return group_movies
+
 def _cluster_by_hierarchy():
 
 
