@@ -24,9 +24,9 @@ n_movies = len(list_movies)
 
 
 rating1 = [at.Rating(5),at.Rating(5),at.Rating(0),at.Rating(0),at.Rating(3)]
-rating2 = [at.Rating(4.5),at.Rating(4),at.Rating(0.5),at.Rating(1),at.Rating(2)]
-rating3 = [at.Rating(0.5),at.Rating(1),at.Rating(5),at.Rating(4.5),at.Rating(1)]
-rating4 = [at.Rating(0.5),at.Rating(1),at.Rating(4),at.Rating(3.5),at.Rating(5)]
+rating2 = [at.Rating(4.5),at.Rating(4),at.Rating(),at.Rating(1),at.Rating(2)]
+rating3 = [at.Rating(0.5),at.Rating(1),at.Rating(5),at.Rating(4.5),at.Rating()]
+rating4 = [at.Rating(),at.Rating(1),at.Rating(4),at.Rating(3.5),at.Rating(5)]
 
 list_ratings = [rating1, rating2, rating3, rating4]
 

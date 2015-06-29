@@ -107,12 +107,17 @@ class Rating(object):
         if value > self.units.maxvalue:
             raise ValueError("Value is greater than max value in units of "+self.units.unit_name)
 
-        self.normalized_value = (value - self.units.minvalue) / (
-            self.units.maxvalue - self.units.minvalue) #rescale rating to [0,1]
-                
+        try:
+            self.normalized_value = (value - self.units.minvalue) / (
+                self.units.maxvalue - self.units.minvalue) #rescale rating to [0,1]
+        except TypeError:
+            self.normalized_value = None
             
     def __repr__(self):
-        return str(round(self.value,1))+"/"+str(self.units.maxvalue)+" "+self.units.unit_name
+        try:    
+            return str(round(self.value,1))+"/"+str(self.units.maxvalue)+" "+self.units.unit_name
+        except TypeError:
+            return str(None)
 
 
 
