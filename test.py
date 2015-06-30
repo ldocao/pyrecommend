@@ -61,20 +61,20 @@ movie5.add(romance5,action5,horror5,silverster_stallone)
 
 
 
-# rating1 = [at.Rating(5),at.Rating(5),at.Rating(0),at.Rating(0),at.Rating(3)]
-# rating2 = [at.Rating(4.5),at.Rating(4),at.Rating(),at.Rating(1),at.Rating(2)]
-# rating3 = [at.Rating(0.5),at.Rating(1),at.Rating(5),at.Rating(4.5),at.Rating()]
-# rating4 = [at.Rating(),at.Rating(1),at.Rating(4),at.Rating(3.5),at.Rating(5)]
+rating1 = [at.Rating(5),at.Rating(5),at.Rating(0),at.Rating(0),at.Rating(3)]
+rating2 = [at.Rating(4.5),at.Rating(4),at.Rating(),at.Rating(1),at.Rating(2)]
+rating3 = [at.Rating(0.5),at.Rating(1),at.Rating(5),at.Rating(4.5),at.Rating()]
+rating4 = [at.Rating(),at.Rating(1),at.Rating(4),at.Rating(3.5),at.Rating(5)]
 
-# list_ratings = [rating1, rating2, rating3, rating4]
+list_ratings = [rating1, rating2, rating3, rating4]
 
-# data = {}
-# i=0
-# for user in list_users:
-#     j=0
-#     for movie in list_movies:
-#         data[tuple([user,movie])]=list_ratings[i][j]
-#         print i,j,data[tuple([user,movie])] 
-#         j+=1
-#     i+=1
+data = {}
+i=0
+for user in list_users:
+    j=0
+    for movie in list_movies:
+        data[tuple([user,movie])]=list_ratings[i][j]
+        print i,j,data[tuple([user,movie])] 
+        j+=1
+    i+=1
 

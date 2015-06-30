@@ -154,11 +154,10 @@ class Rating(object):
         self.value = value
         self.units = units
 
-        try:
+        if self.value != None:
             if (value > self.units.maxvalue) or (value < self.units.minvalue):
-                raise ValueError("Value is greater than max value in units of "+self.units.unit_name)
-        except AttributeError:
-            pass
+                raise ValueError("Value is outside range units of "+self.units.unit_name)
+
         
     
             
