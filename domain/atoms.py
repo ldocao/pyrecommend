@@ -1,25 +1,42 @@
 import uuid
+from warnings import warn
 
 
 
-
+def flatten(x):
+    """Flatten a list of arbitrary depth"""
+        
+    try:
+        y = iter(x)
+    except TypeError:
+        warn("x is not an iterable. Returning x.")
+        return x
     
+    result = []
+    for el in x:
+        if hasattr(el, "__iter__") and not isinstance(el, basestring):
+            result.extend(flatten(el))
+        else:
+            result.append(el)
+    return result
+
+
+
+
+
 
 class User(object):
     """User identification
 
     """
     
-    #__metaclass__ = IDIsReadOnly
-
     def __init__(self, firstname, lastname):
         self.firstname = firstname
         self.lastname = lastname
         self.ID = uuid.uuid4() #generate unique identifier UUID
+        #self.dateofbirth = dateofbirth
         self.points = 0 #experience points
         ##add here other caracteristics (country, premium status)
-
-
 
     
     def __repr__(self):
@@ -45,22 +62,22 @@ class Movie(object):
     """Movie identification
     """
 
-    __metaclass__ = IDIsReadOnly
-
-    
     def __init__(self, title, producer="unknown", year="unknown"):
         self.title = title
         self.producer = producer
         self.ID = uuid.uuid4() #generate unique identifier UUID
-        #self.tags = Tags() #list of strings
+        # self.country
+        # self.year
+
+        # self.tags = Tags() #list of strings
         
         try:
             self.year = int(year)
         except ValueError:
             self.year = "unknown"
             
-    
-
+        self.actors = []    
+        self.features = [] #list of features
             
     def __repr__(self):
         return "Movie("+str(self.ID)+")"
@@ -70,6 +87,24 @@ class Movie(object):
 
 
 
+    def add(self,*args):
+        """Add something to a list
+
+        Parameters:
+        ----------
+
+        Notes:
+        -----
+        You can add several objects, but they must be unpacked
+        """
+
+        for count, elem in enumerate(args):
+            if isinstance(elem, Feature):
+                self.features.append(elem)
+            elif isinstance(elem, Actor):
+                self.actors.append(elem)
+            else:
+                raise TypeError("Can't add ")
 
 
 
@@ -124,12 +159,6 @@ class Rating(object):
                 raise ValueError("Value is greater than max value in units of "+self.units.unit_name)
         except AttributeError:
             pass
-
- 
-
-
-
-
         
     
             
@@ -183,6 +212,35 @@ class Tags(object):
 
     def __init__(self, list_tags):
         self.names = [tag.name for tag in list_tags]
+
+
+class Feature(object):
+    """A feature for a movie"""
+
+    def __init__(self, name, value=0, weight=1):
+        self.name = name
+        self.value = value
+        self.weight = weight
+
+
+    def __repr__(self):
+        return "Feature("+self.name+","+str(self.value)+","+str(self.weight)+")"
+
+
+
+
+
+class Actor(object):
+    """An Actor in Movie"""
+
+    def __init__(self,firstname,lastname, sex=None):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.sex = sex
+
+    def __repr__(self):
+        return "Actor("+self.firstname+","+str(self.lastname)+")"
+
 
 
 
