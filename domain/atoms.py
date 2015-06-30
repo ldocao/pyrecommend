@@ -3,16 +3,6 @@ import uuid
 
 
 
-
-
-
-class IDIsReadOnly(type):
-    """Metaclass to prevent the alteration of ID class attribute"""
-    
-    def __setattr__(cls, name, value):
-        raise ValueError(name)
-
-
     
 
 class User(object):
@@ -20,17 +10,20 @@ class User(object):
 
     """
     
-    __metaclass__ = IDIsReadOnly
+    #__metaclass__ = IDIsReadOnly
 
     def __init__(self, firstname, lastname):
         self.firstname = firstname
         self.lastname = lastname
-        self.id = uuid.uuid4() #generate unique identifier UUID
+        self.ID = uuid.uuid4() #generate unique identifier UUID
         self.points = 0 #experience points
         ##add here other caracteristics (country, premium status)
 
+
+
+    
     def __repr__(self):
-        return "User("+str(self.id)+")"
+        return "User("+str(self.ID)+")"
 
     def add_points(self, additional_points):
         """Add points to his counter
@@ -58,7 +51,7 @@ class Movie(object):
     def __init__(self, title, producer="unknown", year="unknown"):
         self.title = title
         self.producer = producer
-        self.id = uuid.uuid4() #generate unique identifier UUID
+        self.ID = uuid.uuid4() #generate unique identifier UUID
         #self.tags = Tags() #list of strings
         
         try:
@@ -70,7 +63,7 @@ class Movie(object):
 
             
     def __repr__(self):
-        return "Movie("+str(self.id)+")"
+        return "Movie("+str(self.ID)+")"
     
     def __str__(self):
         return self.title+" by "+self.producer+" in "+self.year
@@ -84,19 +77,41 @@ class Star(object):
     """Casual unit of rating"""
 
     def __init__(self, maxvalue=5, minvalue=0):
+        self.unit_name = "star"
         self.maxvalue = maxvalue
         self.minvalue = minvalue
-        self.unit_name = "star"
-
-
-class Dimensionless(object):
-    """Dimensionless unit"""
-
-    def __init__(self):
-        self.unit_name = "1"
 
 
 
+
+class UserNormalized(object):
+    """Normalize to mean and standard deviation user rating"""
+
+    def __init__(self, mean, sdv):
+        self.unit_name = "User_Normalized"
+        self.mean = mean
+        self.sdv = sdv
+
+
+class UnityNormalized(object):
+    """Normalize to [0,1]"""
+
+    def __init__(self, minvalue, maxvalue):
+        self.unit_name = "Unity_Normalized"
+        self.maxvalue = maxvalue
+        self.minvalue = minvalue
+
+        # try:
+       #      self.normalized_value = (value - self.units.minvalue) / (
+       #          self.units.maxvalue - self.units.minvalue) #rescale rating to [0,1]
+       #  except TypeError:
+       #      self.normalized_value = None
+
+
+
+
+        
+        
 class Rating(object):
     """Rating of a movie by a given user"""
 
@@ -104,14 +119,19 @@ class Rating(object):
         self.value = value
         self.units = units
 
-        if value > self.units.maxvalue:
-            raise ValueError("Value is greater than max value in units of "+self.units.unit_name)
-
         try:
-            self.normalized_value = (value - self.units.minvalue) / (
-                self.units.maxvalue - self.units.minvalue) #rescale rating to [0,1]
-        except TypeError:
-            self.normalized_value = None
+            if (value > self.units.maxvalue) or (value < self.units.minvalue):
+                raise ValueError("Value is greater than max value in units of "+self.units.unit_name)
+        except AttributeError:
+            pass
+
+ 
+
+
+
+
+        
+    
             
     def __repr__(self):
         try:    
