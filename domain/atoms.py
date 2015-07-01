@@ -3,6 +3,9 @@ from warnings import warn
 
 
 
+
+
+
 def flatten(x):
     """Flatten a list of arbitrary depth"""
         
@@ -158,7 +161,15 @@ class Rating(object):
             if (value > self.units.maxvalue) or (value < self.units.minvalue):
                 raise ValueError("Value is outside range units of "+self.units.unit_name)
 
-        
+
+
+    def __add__(self,other):
+        if type(self) != type(other):
+            raise TypeError("Try to sum two objects of different types.")
+        return Rating(self.value+other.value, units=self.units)
+
+    __radd__ = __add__
+    
     def __mul__(self,scalar):
         return Rating(self.value*scalar, units=self.units)
 

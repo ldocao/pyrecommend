@@ -3,8 +3,8 @@ import sys
 import os
 sys.path.append("/Users/ldocao/Documents/Professionnel/Data Science/S2DS/Utelly/pyrecommend/domain/")
 import atoms as at
-
-
+import numpy as np
+import regression as reg
 
 user1 = at.User("Alfred", "Dupont")
 user2 = at.User("Bob", "Dupont")
@@ -61,7 +61,7 @@ movie5.add(romance5,action5,horror5,silverster_stallone)
 
 
 
-rating1 = [at.Rating(5),at.Rating(5),at.Rating(0),at.Rating(0),at.Rating(3)]
+rating1 = [at.Rating(5),at.Rating(5),at.Rating(0),at.Rating(),at.Rating(3)]
 rating2 = [at.Rating(4.5),at.Rating(4),at.Rating(),at.Rating(1),at.Rating(2)]
 rating3 = [at.Rating(0.5),at.Rating(1),at.Rating(5),at.Rating(4.5),at.Rating()]
 rating4 = [at.Rating(),at.Rating(1),at.Rating(4),at.Rating(3.5),at.Rating(5)]
@@ -78,3 +78,15 @@ for user in list_users:
         j+=1
     i+=1
 
+
+
+
+affinity = [at.Rating(5),at.Rating(0)]
+features = [at.Feature("romance",0.9), at.Feature("action")]
+
+
+temp_affinity = np.array([obj.value for obj in affinity])
+temp_features = np.array([obj.value for obj in features])
+
+print reg.predicted_rating(affinity, features)
+print reg.cost_function(rating1,)

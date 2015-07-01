@@ -26,39 +26,77 @@ def predicted_rating(user_affinity, movie_features):
     user_affinity: list of Rating
         List of affinity for all features in a movie, for a given user.
 
-    movie_features: list of features
-        List of features for a given movie
+    movie_features: list of Feature
+        List of features for a given movie. Sum of all features must be <= 1
     
 
     Return:
     ------
-    prediction: Rating list
+    prediction: list of Rating
         Predicted rating of movies by the users in user_affinity.units.
     """
 
-
-    return [a*f.value for a,f in zip(user_affinity,movie_features)]
-
-
-
-
-
-
-
-def cost_function(user_features, movie_features, training_rating_users):
-    """Compute the cost function for a given set of user_features, movie_features and training_rating_users"""
+    rating_per_feature = [a*f.value for a,f in zip(user_affinity,movie_features)]
+    start = Rating(0,units=rating_per_feature[0].units) #i need to initialize the sum
+    return sum(rating_per_feature,start)
 
 
 
 
 
-def regularization_term(user_features):
-    """Regularization term in the cost function"""
 
-    lambda_reg = 1
-    #sum(user_features.value**2)
 
-    return regularization
+def regularization_term(user_affinity, lambda_reg=1.):
+    """Regularization term in the cost function
+
+
+    Parameters:
+    ----------
+    user_affinity: list of Rating
+        List of affinity for all features in a movie, for a given user.
+
+    lambda_reg: float
+        Control parameter for regularization.
+    """
+
+    regularization = sum([a.value**2 for a in user_affinity])
+
+    return lambda_reg/2.*regularization
+
+
+
+
+
+
+def cost_function(user_affinity, movie_features, training_user_rating,
+                  lambda_reg=0.):
+    """Compute the cost function for a given set of user_affinity, movie_features and training_user_rating
+
+    Parameters:
+    ----------
+    user_affinity: list of Rating [n_features]
+        List of affinity for all features in a movie, for a given user. 
+
+    movie_features: list of Feature [n_features]
+        List of features for a given movie
+
+    training_user_rating: Rating 
+        Rating from user for the given movie. 
+
+    Return:
+    ------
+    cost: Float
+        Cost for the current parameters. Units are user_affinity.units**2
+    """
+
+
+    cost = (predicted_rating(user_affinity,movie_features) - training_user_rating)
+    cost += regularization_term(user_affinity,lambda_reg=lambda_reg) #add regularization term
+    
+    return cost
+
+
+
     
 
 
