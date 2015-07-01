@@ -1,22 +1,43 @@
 ##PURPOSE: minimize cost function to find best estimate for user profile features
 
+import numpy as np
+import pdb
+
+# n_movies : number of movies
+# n_features : number of features for a movie (eg: genre)
+
+# user_rating : array for a given user of ratings for all movies [n_movies]
+# user_has_rated : array for a given user of yes or no for all movies if he has rated [n_movies]
+# user_affinity : array for a given user of affinity with a feature of a movie [n_features]
+# movie_features : array of components for a given movie [n_feature]
+
+# A feature is dimensionless and normalized [0,1]
+# An affinity is in star units
 
 
 
-def predicted_rating(user_features, movie_features):
+
+
+def predicted_rating(user_affinity, movie_features):
     """Predicted rating for users on movies
 
     Parameters:
     ----------
+    user_affinity: list of Rating
+        List of affinity for all features in a movie, for a given user.
 
+    movie_features: list of features
+        List of features for a given movie
+    
 
     Return:
     ------
     prediction: Rating list
-        Predicted rating of movies by the users.
+        Predicted rating of movies by the users in user_affinity.units.
     """
 
-    return prediction
+
+    return [a*f.value for a,f in zip(user_affinity,movie_features)]
 
 
 
