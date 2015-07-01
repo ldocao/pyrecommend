@@ -159,6 +159,8 @@ class Rating(object):
         self.units = units
 
 
+    ##I could use decorator @property and @units.setter to change units
+        
     def __add__(self,other):
         if type(self) != type(other):
             raise TypeError("Try to sum two objects of different types.")
@@ -197,6 +199,12 @@ class VRating(object):
         array = [Rating()]*functools.reduce(operator.mul, dim, 1) #create 1D array
         self.value = np.array(array).reshape(dim) #reshape to desired dimensions
 
+
+
+    def __mul__(self,scalar_vector):
+        return self.value*scalar_vector
+
+        
     def __getitem__(self,index):
         return self.value[index]
     
