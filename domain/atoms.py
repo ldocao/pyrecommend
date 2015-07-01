@@ -3,7 +3,7 @@ from warnings import warn
 import operator
 import functools
 import numpy as np
-
+import pdb
 
 
 
@@ -204,7 +204,7 @@ class VRating(object):
         self.value[index] = newval
 
     def __repr__(self):
-        self.value
+        return str(self.value)
 
 
 
