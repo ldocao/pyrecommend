@@ -112,18 +112,21 @@ def cost_function(user_affinity, movie_features, training_set,
     """
 
     
-    user_has_rated = [elem.value == None for elem in training_set]
+    #user_has_rated = [elem.value == None for elem in training_set]
+    n_users = len(user_affinity)
+    n_movies = len(movie_features)
 
     total_cost = 0. #initialize total cost
     total_regularization = 0 #initialize regularization term
-    for i in xrange(0,n_users):
-        for j in xrange(0,n_movies):
-            total_cost += _square_error(
-                user_affinity[i], movie_features[j],training_set[i,j])*0.5
+    for i in range(0,n_users):
+        for j in range(0,n_movies):
+            if training_set[i][j].value != None:
+                total_cost += _square_error(
+                    user_affinity[i], movie_features[j],training_set[i][j])*0.5
             
         total_regularization += _regularization_term(user_affinity[i], lambda_reg=lambda_reg)
         
-    return totalcost + total_regularization 
+    return total_cost + total_regularization 
 
 
 def gradient_descent_update():
