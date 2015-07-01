@@ -25,36 +25,29 @@ def _predicted_rating(user_affinity, movie_features):
 
     Parameters:
     ----------
-    user_affinity: list of Rating
+    user_affinity: list of Rating [n_features]
         List of affinity for all features in a movie, for a given user.
 
-    movie_features: list of Feature
+    movie_features: list of Feature [n_features]
         List of features for a given movie. Sum of all features must be <= 1
     
-
     Return:
     ------
     prediction: list of Rating
         Predicted rating of movies by the users in user_affinity.units.
     """
-
     rating_per_feature = [a*f.value for a,f in zip(user_affinity,movie_features)]
     start = Rating(0,units=rating_per_feature[0].units) #i need to initialize the sum
     return sum(rating_per_feature,start)
 
 
 
-
-
-
-
 def _regularization_term(user_affinity, lambda_reg=1.):
     """Regularization term in the cost function
 
-
     Parameters:
     ----------
-    user_affinity: list of Rating
+    user_affinity: list of Rating [n_features]
         List of affinity for all features in a movie, for a given user.
 
     lambda_reg: float
@@ -64,10 +57,7 @@ def _regularization_term(user_affinity, lambda_reg=1.):
     ------
     float
     """
-
-    regularization = sum([a.value**2 for a in user_affinity])
-
-    return lambda_reg/2.*regularization
+    return lambda_reg/2.*sum([a.value**2 for a in user_affinity])
 
 
 
@@ -93,10 +83,8 @@ def _square_error(user_affinity, movie_features, training_user_rating):
     cost: Float
         Cost for the current parameters. Units are user_affinity.units**2
     """
+    return (_predicted_rating(user_affinity,movie_features) - training_user_rating).value**2
 
-    cost = (predicted_rating(user_affinity,movie_features) - training_user_rating).value**2
-    
-    return cost
 
 
 

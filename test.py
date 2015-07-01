@@ -88,5 +88,7 @@ features = [at.Feature("romance",0.9), at.Feature("action")]
 temp_affinity = np.array([obj.value for obj in affinity])
 temp_features = np.array([obj.value for obj in features])
 
-print reg.predicted_rating(affinity, features)
-print reg.cost_function(rating1,)
+print reg._predicted_rating(affinity, features)
+print reg._regularization_term(affinity)
+print reg._square_error(affinity,features,at.Rating(4.5))
+#print reg.cost_function(rating1,)

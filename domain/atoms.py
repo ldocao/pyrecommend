@@ -169,7 +169,14 @@ class Rating(object):
         return Rating(self.value+other.value, units=self.units)
 
     __radd__ = __add__
-    
+
+
+    def __sub__(self,other):
+        if type(self) != type(other):
+            raise TypeError("Try to sum two objects of different types.")
+        return Rating(self.value-other.value, units=self.units)
+        
+        
     def __mul__(self,scalar):
         return Rating(self.value*scalar, units=self.units)
 
