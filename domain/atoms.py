@@ -159,7 +159,11 @@ class Rating(object):
                 raise ValueError("Value is outside range units of "+self.units.unit_name)
 
         
-    
+    def __mul__(self,scalar):
+        return Rating(self.value*scalar, units=self.units)
+
+    __rmul__ = __mul__ #define back multiplication as multiplication
+
             
     def __repr__(self):
         try:    
@@ -220,6 +224,7 @@ class Feature(object):
         self.name = name
         self.value = value
         self.weight = weight
+        self.unit = UnityNormalized
 
 
     def __repr__(self):
