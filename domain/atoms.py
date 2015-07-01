@@ -1,7 +1,8 @@
 import uuid
 from warnings import warn
-
-
+import operator
+import functools
+import numpy as np
 
 
 
@@ -185,6 +186,25 @@ class Rating(object):
             return str(None)
 
 
+
+
+class VRating(object):
+    """N-dimensional array of rating"""
+
+    def __init__(self, dim, units=Star()):
+        self.units = units
+
+        array = [Rating()]*functools.reduce(operator.mul, dim, 1) #create 1D array
+        self.value = np.array(array).reshape(dim) #reshape to desired dimensions
+
+    def __getitem__(self,index):
+        return self.value[index]
+    
+    def __setitem__(self,index,newval):
+        self.value[index] = newval
+
+    def __repr__(self):
+        self.value
 
 
 
