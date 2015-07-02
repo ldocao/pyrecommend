@@ -120,7 +120,8 @@ class Star(object):
         self.maxvalue = maxvalue
         self.minvalue = minvalue
 
-
+    def __repr__(self):
+        return self.unit_name
 
 
 class UserNormalized(object):
@@ -206,10 +207,10 @@ class VRating(object):
 
         
     def __getitem__(self,index):
-        return self.value[index]
+        return Rating(self.value[index], units= self.units)
     
-    def __setitem__(self,index,newval):
-        self.value[index] = newval
+    def __setitem__(self,index,newrate):
+        self.value[index] = newrate
 
     def __repr__(self):
         return str(self.value)

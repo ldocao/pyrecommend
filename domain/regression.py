@@ -25,7 +25,7 @@ def _predicted_rating(user_affinity, movie_features):
 
     Parameters:
     ----------
-    user_affinity: list of Rating [n_features]
+    user_affinity: VRating [n_features]
         List of affinity for all features in a movie, for a given user.
 
     movie_features: list of Feature [n_features]
@@ -97,10 +97,10 @@ def cost_function(user_affinity, movie_features, training_set,
     Parameters:
     ----------
     user_affinity: list of Rating [n_users*n_features]
-        List of affinity for all features in a movie, for a given user. 
+        List of affinity for all features in a movie
 
     movie_features: list of Feature [n_movies*n_features]
-        List of features for a given movie
+        List of features for all movies
 
     training_set: List of Rating [n_users*n_movies]
         Rating from user for the given movie. 
@@ -129,16 +129,26 @@ def cost_function(user_affinity, movie_features, training_set,
     return total_cost + total_regularization 
 
 
-def gradient_descent_update():
+def gradient_descent_oneuser_onefeature(affinity, features, training,
+                                        lambda_reg=0, alpha=1.):
     """Perform a gradient descent to minimize the cost function
 
     Parameters:
     ----------
-    
+    affinity: list of Rating [n_features]
+        List of affinity for all features in a movie, for a given user. 
+
+    features: list of Feature [n_features*n_movies]
+        List of features for a given movie
+
+    training: list of Rating [n_movies]
+        List of ratings by a user for all movies? Must be in the same units than affinity
 
     """
 
-    alpha = 0.1
+    affinity = np.array([a.value for a in affinity])
+    features = np.array(lambda training: training.value)
+    
 
 
 

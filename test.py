@@ -44,8 +44,8 @@ features = [romance, action, adventure]
 features = np.array(features).T.tolist() #transpose features
 
 
-rating1 = [at.Rating(5),at.Rating(),at.Rating(2),at.Rating(1)]
-rating2 = [at.Rating(),at.Rating(0.5),at.Rating(5),at.Rating(4)]
+rating1 = [at.Rating(5),at.Rating(0),at.Rating(2),at.Rating(1)]
+rating2 = [at.Rating(0),at.Rating(0.5),at.Rating(5),at.Rating(4)]
 
 ratings = [rating1, rating2]
 
@@ -58,7 +58,7 @@ ratings = [rating1, rating2]
 affinity1 = [at.Rating(3),at.Rating(2),at.Rating(1)]
 affinity2 = [at.Rating(0.2),at.Rating(4),at.Rating(4.5)]
 affinity = [affinity1, affinity2]
-result = reg.cost_function(affinity, features, ratings)
+result = reg.cost_function(affinity, features)
 
 
 
